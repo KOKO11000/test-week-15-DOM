@@ -1,37 +1,36 @@
 const targetScore = document.getElementsByClassName("target-score")
+const playNow = document.getElementById("play-now")
 const players = document.getElementsByClassName("player")
 const scores = document.getElementsByClassName("score")
 const totalScores = document.getElementsByClassName("total-score")
 const hold = document.getElementsByClassName("hold")
 const roll = document.getElementsByClassName("roll")
 
-
 hold[0].textContent = "Hold"
 roll[0].textContent = "Roll"
 hold[1].textContent = "Hold"
 roll[1].textContent = "Roll"
 
-// const player = [players[0], players[1]]
+const player = [players[0], players[1]]
 
 let score = 0
 let totalScore = 0
 
-const player = {
-    player0: {
-        score,
-        totalScore
-    },
-    player1: {
-        score,
-        totalScore
-    }
-}
-
-
-scores[0].textContent = `score: ${score}`
 scores[1].textContent = `score: ${score}`
+scores[0].textContent = `score: ${score}`
 totalScores[0].textContent = `total: ${totalScore}`
 totalScores[1].textContent = `total: ${totalScore}`
+
+
+function whoPlayNow() {
+
+    if (player[0]) {
+        playNow.textContent = "player 1 play now"
+    }
+    if (player[1]) {
+        playNow.textContent = "player 2 play now"
+    }
+}
 
 
 function notDuble(dice1, dice2, player) {
@@ -41,9 +40,8 @@ function notDuble(dice1, dice2, player) {
     }
     else {
         score += dice1 + dice2
-        scores[player].textContent= score
+        scores[player] = score
         totalScore += score
-        
     }
 }
 
@@ -51,51 +49,55 @@ function notDuble(dice1, dice2, player) {
 function getRandDice(player) {
     const side1 = Math.floor(Math.random() * 6 + 1)
     const side2 = Math.floor(Math.random() * 6 + 1)
-    notDuble(side1, side2)
-    // return { side1, side2 };
+    notDuble(side1, side2, player)
+    const sum = side1 + side2
+    return sum
 }
 
 
 
-function RollOrHold() {
+function rollOrHold() {
     hold[0].addEventListener("click", (e) => {
         let target = e.target
+        target = player[1]
         console.log(target);
-        target = player["player1"]
         getRandDice(target)
 
     })
     hold[1].addEventListener("click", (e) => {
         let target = e.target
+        target = player[0]
         console.log(target);
-        target = player["player0"]
         getRandDice(target)
 
     })
     roll[0].addEventListener("click", (e) => {
         let target = e.target
-        target = player["player1"]
-        getRandDice(target)
+        scores[0].textContent = getRandDice(target)
+        
     })
+
     roll[1].addEventListener("click", (e) => {
         let target = e.target
-        target = player["player1"]
-        getRandDice(target)
+        score = getRandDice(player[1])
+        scores[1].textContent = score
+        console.log(score);
     })
 
 }
 
 
 function winner() {
-    if (totalScore = [50]) {
-        return "we have a winner!"
+    if (totalScore = 50) {
+        return true
     }
 }
 
 
+function startGame() {
+    whoPlayNow()
+    rollOrHold()
+}
 
-
-console.log(getRandDice(player0));
-RollOrHold()
-
+startGame()
 
