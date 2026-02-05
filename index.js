@@ -22,12 +22,11 @@ totalScores[0].textContent = `total: ${totalScore}`
 totalScores[1].textContent = `total: ${totalScore}`
 
 
-function whoPlayNow() {
-
-    if (player[0]) {
+function whoPlayNow(play) {
+    if (play == player[0]) {
         playNow.textContent = "player 1 play now"
     }
-    if (player[1]) {
+    if (play == player[1]) {
         playNow.textContent = "player 2 play now"
     }
 }
@@ -60,28 +59,26 @@ function rollOrHold() {
     hold[0].addEventListener("click", (e) => {
         let target = e.target
         target = player[1]
-        console.log(target);
         getRandDice(target)
 
     })
     hold[1].addEventListener("click", (e) => {
         let target = e.target
         target = player[0]
-        console.log(target);
         getRandDice(target)
 
     })
     roll[0].addEventListener("click", (e) => {
-        let target = e.target
-        scores[0].textContent = getRandDice(target)
+
+        scores[0].textContent = getRandDice(players[0])
         
     })
 
     roll[1].addEventListener("click", (e) => {
-        let target = e.target
-        score = getRandDice(player[1])
+
+        score = getRandDice(players[1])
         scores[1].textContent = score
-        console.log(score);
+        
     })
 
 }
@@ -95,7 +92,7 @@ function winner() {
 
 
 function startGame() {
-    whoPlayNow()
+    whoPlayNow(players[0])
     rollOrHold()
 }
 
