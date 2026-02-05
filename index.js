@@ -1,103 +1,103 @@
 const targetScore = document.getElementsByClassName("target-score")
+const playNow = document.getElementById("play-now")
 const players = document.getElementsByClassName("player")
 const scores = document.getElementsByClassName("score")
 const totalScores = document.getElementsByClassName("total-score")
-const hold = document.getElementById("hold")
-const roll = document.getElementById("roll")
-const hold2 = document.getElementById("hold2")
-const roll2 = document.getElementById("roll2")
+const hold = document.getElementsByClassName("hold")
+const roll = document.getElementsByClassName("roll")
+
+hold[0].textContent = "Hold"
+roll[0].textContent = "Roll"
+hold[1].textContent = "Hold"
+roll[1].textContent = "Roll"
+
+const player = [players[0], players[1]]
+
+let score = 0
+let totalScore = 0
+
+scores[1].textContent = `score: ${score}`
+scores[0].textContent = `score: ${score}`
+totalScores[0].textContent = `total: ${totalScore}`
+totalScores[1].textContent = `total: ${totalScore}`
 
 
+function whoPlayNow() {
 
-hold.textContent = "Hold"
-roll.textContent = "Roll"
-hold2.textContent = "Hold"
-roll2.textContent = "Roll"
-
-
-
-let player1
-let player2
-let score = [0]
-let totalScore = [0]
+    if (player[0]) {
+        playNow.textContent = "player 1 play now"
+    }
+    if (player[1]) {
+        playNow.textContent = "player 2 play now"
+    }
+}
 
 
-
-
-scores[0].textContent= `score: ${score}`
-scores[1].textContent= `score: ${score}`
-totalScores[0].textContent= `total: ${totalScore}`
-totalScores[1].textContent= `total: ${totalScore}`
-
+function notDuble(dice1, dice2, player) {
+    if (dice1 == dice2) {
+        score = 0
+        player[-1]
+    }
+    else {
+        score += dice1 + dice2
+        scores[player] = score
+        totalScore += score
+    }
+}
 
 
 function getRandDice(player) {
     const side1 = Math.floor(Math.random() * 6 + 1)
     const side2 = Math.floor(Math.random() * 6 + 1)
-    if (side1 == side2) {
-        if (player1) {
-            score = [0]                  
-            getRandDice(player2)
-        }
+    notDuble(side1, side2, player)
+    const sum = side1 + side2
+    return sum
+}
+
+
+
+function rollOrHold() {
+    hold[0].addEventListener("click", (e) => {
+        let target = e.target
+        target = player[1]
+        console.log(target);
+        getRandDice(target)
+
+    })
+    hold[1].addEventListener("click", (e) => {
+        let target = e.target
+        target = player[0]
+        console.log(target);
+        getRandDice(target)
+
+    })
+    roll[0].addEventListener("click", (e) => {
+        let target = e.target
+        scores[0].textContent = getRandDice(target)
         
-        if (player2) {
-            score = [0]
-            getRandDice(player1)
-        }
-    }
-    else score.push(side1 + side2)
-    return { side1, side2 };
+    })
+
+    roll[1].addEventListener("click", (e) => {
+        let target = e.target
+        score = getRandDice(player[1])
+        scores[1].textContent = score
+        console.log(score);
+    })
+
 }
-
-
-
-function RollOrHold() {
-    if (hold || hold2) {
-        hold.addEventListener("click", (e) => {
-            const target = e.target
-            if (player1) {
-
-
-
-            }
-            if (player2) {
-                getRandDice(player1)
-            }
-        })
-        hold2.addEventListener("click", (e) => {
-            if (player1) {
-                getRandDice(player2)
-            }
-            if (player2) {
-                getRandDice(player1)
-            }
-        })
-    }
-
-
-    if (roll || roll2) {
-        roll.addEventListener("click", (e) => {
-            const target = e.target
-            console.log("target roll", target);
-
-        })
-        roll2.addEventListener("click", (e) => {
-            return
-        })
-    }
-}
-
 
 
 function winner() {
-    if (totalScore[100]) {
-        return "we have a winner!"
+    if (totalScore = 50) {
+        return true
     }
 }
 
 
-RollOrHold()
-console.log(getRandDice(player1));
-console.log(score);
+function startGame() {
+    whoPlayNow()
+    rollOrHold()
+}
 
+startGame()
 
